@@ -27,7 +27,7 @@ public class Gini {
                 String[] values = line.split(",");  // Assuming values are comma-separated
                 String className = values[values.length - 1].trim();  // Assuming the class label is in the last column
                 classCounts.put(className, classCounts.getOrDefault(className, 0) + 1);
-                System.out.println(Arrays.toString(values));
+                //System.out.println(Arrays.toString(values));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -39,11 +39,16 @@ public class Gini {
 
         // Calculate and print Gini Index
         double giniIndex = calculateGiniIndex(classProbabilities);
-        System.out.println("Gini Index: " + giniIndex);
+        //System.out.println("Gini Index: " + giniIndex);
     }
 
     // Calculate class probabilities
     private static double[] calculateClassProbabilities(Map<String, Integer> classCounts) {
+    	for (String record: classCounts.keySet()) {
+    	    String key = record.toString();
+    	    String value = classCounts.get(record).toString();
+    	    System.out.println(key + " " + value);
+    	}
         double[] classProbabilities = new double[classCounts.size()];
         int totalCount = classCounts.values().stream().mapToInt(Integer::intValue).sum();
 
@@ -52,7 +57,7 @@ public class Gini {
             double probability = (double) entry.getValue() / totalCount;
             classProbabilities[index++] = probability;
         }
-
+        System.out.println(Arrays.toString(classProbabilities));
         return classProbabilities;
     }
 
